@@ -144,16 +144,16 @@ const app = (function () {
       switch (c) {
         // WASD: Bewegung der Kamera in der XY-Ebene
         case 'W':
-          camera.eye[1] += deltaTranslate;
+          camera.eye[1] += deltaTranslate; // Kamera nach oben bewegen
           break;
         case 'S':
-          camera.eye[1] -= deltaTranslate;
+          camera.eye[1] -= deltaTranslate; // Kamera nach unten bewegen
           break;
         case 'A':
-          camera.zAngle -= deltaRotate;
+          camera.eye[0] -= deltaTranslate; // Kamera nach links bewegen
           break;
         case 'D':
-          camera.zAngle += deltaRotate;
+          camera.eye[0] += deltaTranslate; // Kamera nach rechts bewegen
           break;
 
         case 'C':
@@ -173,16 +173,16 @@ const app = (function () {
       // Pfeiltasten: Drehung der Szene
       switch (key) {
         case 37: // Left arrow
-          interactiveModel.rotate[1] -= deltaRotate;
+          camera.zAngle -= deltaRotate;
           break;
         case 38: // Up arrow
-          interactiveModel.rotate[0] -= deltaRotate;
+          camera.eye[1] += deltaTranslate;
           break;
         case 39: // Right arrow
-          interactiveModel.rotate[1] += deltaRotate;
+          camera.zAngle += deltaRotate;
           break;
         case 40: // Down arrow
-          interactiveModel.rotate[0] += deltaRotate;
+          camera.eye[1] -= deltaTranslate;
           break;
       }
 
