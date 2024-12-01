@@ -1,9 +1,9 @@
-var app = (function() {
-  var gl;
-  var prog;
-  var models = [];
-  var interactiveModel;
-  var camera = {
+const app = (function () {
+  let gl;
+  let prog;
+  const models = [];
+  let interactiveModel;
+  const camera = {
     eye: [0, 1, 4],
     center: [0, 0, 0],
     up: [0, 1, 0],
@@ -31,7 +31,7 @@ var app = (function() {
   }
 
   function initWebGL() {
-    canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('canvas');
     gl = canvas.getContext('experimental-webgl');
     gl.viewportWidth = canvas.width;
     gl.viewportHeight = canvas.height;
@@ -50,8 +50,8 @@ var app = (function() {
   }
 
   function initShaderProgram() {
-    var vs = initShader(gl.VERTEX_SHADER, "vertexshader");
-    var fs = initShader(gl.FRAGMENT_SHADER, "fragmentshader");
+    const vs = initShader(gl.VERTEX_SHADER, "vertexshader");
+    const fs = initShader(gl.FRAGMENT_SHADER, "fragmentshader");
     prog = gl.createProgram();
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
@@ -61,8 +61,8 @@ var app = (function() {
   }
 
   function initShader(shaderType, SourceTagId) {
-    var shader = gl.createShader(shaderType);
-    var shaderSource = document.getElementById(SourceTagId).text;
+    const shader = gl.createShader(shaderType);
+    const shaderSource = document.getElementById(SourceTagId).text;
     gl.shaderSource(shader, shaderSource);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
@@ -80,7 +80,7 @@ var app = (function() {
   }
 
   function initModels() {
-    var fs = "fillwireframe";
+    const fs = "fillwireframe";
     createModel("cube", fs, [1, 0, 0, 1], [-1.2, 0.1, 0.4], [0, 0, 0], [0.8, 0.5, 0.5]);
     createModel("cube", fs, [0, 1, 0, 1], [0, 0, -0.2], [0, 0, 0], [0.5, 0.35, 0.8]);
     createModel("cube", fs, [0, 0, 1, 1], [0.5, 0, -1.2], [0, 0, 0], [0.5, 0.8, 0.5]);
@@ -88,7 +88,7 @@ var app = (function() {
   }
 
   function createModel(geometryname, fillstyle, color, translate, rotate, scale) {
-    var model = {};
+    const model = {};
     model.fillstyle = fillstyle;
     model.color = color;
     initDataAndBuffers(model, geometryname);
@@ -133,13 +133,13 @@ var app = (function() {
   }
 
   function initEventHandler() {
-    var deltaRotate = Math.PI / 36;
-    var deltaTranslate = 0.05;
+    const deltaRotate = Math.PI / 36;
+    const deltaTranslate = 0.05;
 
-    window.onkeydown = function(evt) {
-      var key = evt.which ? evt.which : evt.keyCode;
-      var c = String.fromCharCode(key);
-      var sign = evt.shiftKey ? -1 : 1;
+    window.onkeydown = function (evt) {
+      const key = evt.which ? evt.which : evt.keyCode;
+      const c = String.fromCharCode(key);
+      const sign = evt.shiftKey ? -1 : 1;
 
       switch (c) {
         case 'W':
@@ -197,7 +197,7 @@ var app = (function() {
     calculateCameraOrbit();
     mat4.lookAt(camera.vMatrix, camera.eye, camera.center, camera.up);
 
-    for (var i = 0; i < models.length; i++) {
+    for (let i = 0; i < models.length; i++) {
       updateTransformations(models[i]);
       gl.uniform4fv(prog.colorUniform, models[i].color);
       gl.uniformMatrix4fv(prog.mvMatrixUniform, false, models[i].mvMatrix);
@@ -207,7 +207,7 @@ var app = (function() {
   }
 
   function calculateCameraOrbit() {
-    var x = 0, z = 2;
+    const x = 0, z = 2;
     camera.eye[x] = camera.center[x];
     camera.eye[z] = camera.center[z];
     camera.eye[x] += camera.distance * Math.sin(camera.zAngle);
@@ -215,13 +215,14 @@ var app = (function() {
   }
 
   function setProjection() {
+    let v;
     switch (camera.projectionType) {
       case "ortho":
-        var v = camera.lrtb;
+        v = camera.lrtb;
         mat4.ortho(camera.pMatrix, -v, v, -v, v, -10, 10);
         break;
       case "frustum":
-        var v = camera.lrtb;
+        v = camera.lrtb;
         mat4.frustum(camera.pMatrix, -v / 2, v / 2, -v / 2, v / 2, 1, 10);
         break;
       case "perspective":
@@ -232,8 +233,8 @@ var app = (function() {
   }
 
   function updateTransformations(model) {
-    var mMatrix = model.mMatrix;
-    var mvMatrix = model.mvMatrix;
+    const mMatrix = model.mMatrix;
+    const mvMatrix = model.mvMatrix;
 
     mat4.identity(mMatrix);
     mat4.identity(mvMatrix);
@@ -255,14 +256,14 @@ var app = (function() {
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vboNormal);
     gl.vertexAttribPointer(prog.normalAttrib, 3, gl.FLOAT, false, 0, 0);
 
-    var fill = (model.fillstyle.search(/fill/) != -1);
+    const fill = (model.fillstyle.search(/fill/) !== -1);
     if (fill) {
       gl.enableVertexAttribArray(prog.normalAttrib);
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.iboTris);
       gl.drawElements(gl.TRIANGLES, model.iboTris.numberOfElements, gl.UNSIGNED_SHORT, 0);
     }
 
-    var wireframe = (model.fillstyle.search(/wireframe/) != -1);
+    const wireframe = (model.fillstyle.search(/wireframe/) !== -1);
     if (wireframe) {
       gl.uniform4fv(prog.colorUniform, [0., 0., 0., 1.]);
       gl.disableVertexAttribArray(prog.normalAttrib);

@@ -87,30 +87,30 @@ var cube = {
   }
 };
 
-var sphere = {
-  createVertexData: function() {
-    var n = 30;
-    var m = 30;
+const sphere = {
+  createVertexData: function () {
+    const n = 30;
+    const m = 30;
 
     this.vertices = new Float32Array(3 * (n + 1) * (m + 1));
     this.normals = new Float32Array(3 * (n + 1) * (m + 1));
     this.indicesLines = new Uint16Array(2 * 2 * n * m);
     this.indicesTris = new Uint16Array(3 * 2 * n * m);
 
-    var du = 2 * Math.PI / n;
-    var dv = Math.PI / m;
-    var r = 1;
+    const du = 2 * Math.PI / n;
+    const dv = Math.PI / m;
+    const r = 1;
 
-    var iLines = 0;
-    var iTris = 0;
+    let iLines = 0;
+    let iTris = 0;
 
-    for (var i = 0, u = 0; i <= n; i++, u += du) {
-      for (var j = 0, v = 0; j <= m; j++, v += dv) {
-        var iVertex = i * (m + 1) + j;
+    for (let i = 0, u = 0; i <= n; i++, u += du) {
+      for (let j = 0, v = 0; j <= m; j++, v += dv) {
+        const iVertex = i * (m + 1) + j;
 
-        var x = r * Math.sin(v) * Math.cos(u);
-        var y = r * Math.sin(v) * Math.sin(u);
-        var z = r * Math.cos(v);
+        const x = r * Math.sin(v) * Math.cos(u);
+        const y = r * Math.sin(v) * Math.sin(u);
+        const z = r * Math.cos(v);
 
         this.vertices[iVertex * 3] = x;
         this.vertices[iVertex * 3 + 1] = y;
@@ -140,31 +140,32 @@ var sphere = {
   }
 };
 
-var cone = {
-  createVertexData: function() {
-    var n = 30;
-    var m = 30;
+const cone = {
+  createVertexData: function () {
+    const n = 30;
+    const m = 30;
 
     this.vertices = new Float32Array(3 * (n + 1) * (m + 1));
     this.normals = new Float32Array(3 * (n + 1) * (m + 1));
     this.indicesLines = new Uint16Array(2 * 2 * n * m);
     this.indicesTris = new Uint16Array(3 * 2 * n * m);
 
-    var du = 2 * Math.PI / n;
-    var dv = 1 / m;
-    var r = 1;
-    var h = 1;
+    const du = 2 * Math.PI / n;
+    const dv = 1 / m;
+    const r = 1;
+    const h = 1;
 
-    var iLines = 0;
-    var iTris = 0;
+    let iLines = 0;
+    let iTris = 0;
 
-    for (var i = 0, u = 0; i <= n; i++, u += du) {
-      for (var j = 0, v = 0; j <= m; j++, v += dv) {
-        var iVertex = i * (m + 1) + j;
+    let i = 0, u = 0;
+    for (; i <= n; i++, u += du) {
+      for (let j = 0, v = 0; j <= m; j++, v += dv) {
+        const iVertex = i * (m + 1) + j;
 
-        var x = (1 - v) * r * Math.cos(u);
-        var y = (1 - v) * r * Math.sin(u);
-        var z = v * h;
+        const x = (1 - v) * r * Math.cos(u);
+        const y = (1 - v) * r * Math.sin(u);
+        const z = v * h;
 
         this.vertices[iVertex * 3] = x;
         this.vertices[iVertex * 3 + 1] = y;
