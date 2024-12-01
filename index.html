@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>ESA 7</title>
-</head>
-<body>
+    <script src="ext/gl-matrix.js"></script>
+    <script src="script.js"></script>
+    <script src="shapes.js"></script>
+    <script type="x-shader/x-vertex" id="vertexshader">
+        precision mediump float;
 
+        attribute vec3 aPosition;
+        attribute vec3 aNormal;
+
+        uniform mat4 uPMatrix;
+        uniform mat4 uMVMatrix;
+        uniform mat3 uNMatrix;
+        uniform vec4 uColor;
+
+        varying vec4 vColor;
+        varying float vZ;
+
+        void main(){
+            gl_Position = uPMatrix * uMVMatrix * vec4(aPosition, 1.0);
+            vColor = uColor;
+            vZ = gl_Position.z / gl_Position.w; // Normalisieren des Z-Werts
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        precision mediump float;
+        varying vec4 vColor;
+        varying float vZ;
+
+        void main() {
+            float gray = (vZ + 1.0) / 2.0; // Z-Wert in den Bereich [0, 1] umwandeln
+            gl_FragColor = vec4(vec3(gray), 1.0); // Graustufenfarbe basierend auf Z-Wert
+        }
+    </script>
+    <title>SHA</title>
+</head>
+<body onload="app.start()">
+<canvas id="canvas" width="500" height="500"></canvas>
+<div id="controls">
+    <h3>Interaktionen:</h3>
+    <ul>
+        <li>WASD: Bewegung der Kamera in der XY-Ebene</li>
+        <li>Pfeiltasten: Drehung der Szene</li>
+    </ul>
+</div>
 </body>
 </html>
