@@ -142,6 +142,7 @@ const app = (function () {
       const sign = evt.shiftKey ? -1 : 1;
 
       switch (c) {
+        // WASD: Bewegung der Kamera in der XY-Ebene
         case 'W':
           camera.eye[1] += deltaTranslate;
           break;
@@ -149,11 +150,12 @@ const app = (function () {
           camera.eye[1] -= deltaTranslate;
           break;
         case 'A':
-          camera.zAngle -= deltaRotate; // Horizontale Drehung nach links
+          camera.zAngle -= deltaRotate;
           break;
         case 'D':
-          camera.zAngle += deltaRotate; // Horizontale Drehung nach rechts
+          camera.zAngle += deltaRotate;
           break;
+
         case 'C':
           camera.zAngle += sign * deltaRotate;
           break;
@@ -166,11 +168,9 @@ const app = (function () {
         case 'V':
           camera.fovy += sign * 5 * Math.PI / 180;
           break;
-        case 'B':
-          camera.lrtb += sign * 0.1;
-          break;
       }
 
+      // Pfeiltasten: Drehung der Szene
       switch (key) {
         case 37: // Left arrow
           interactiveModel.rotate[1] -= deltaRotate;

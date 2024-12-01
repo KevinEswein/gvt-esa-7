@@ -34,16 +34,45 @@
             gl_FragColor = vec4(vec3(gray), 1.0); // Graustufenfarbe basierend auf Z-Wert
         }
     </script>
-    <title>SHA</title>
+    <title>ESA 7</title>
 </head>
 <body onload="app.start()">
-<canvas id="canvas" width="500" height="500"></canvas>
-<div id="controls">
-    <h3>Interaktionen:</h3>
-    <ul>
-        <li>WASD: Bewegung der Kamera in der XY-Ebene</li>
-        <li>Pfeiltasten: Drehung der Szene</li>
-    </ul>
+<div id="container">
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <div id="documentation">
+        <h1>ESA 7 - Z-Buffer Visualisierung</h1>
+        <h3>Dokumentation</h3>
+        <div>WASD: Bewegung der Kamera in der XY-Ebene</div>
+        <br>
+        <div>Pfeiltasten: Drehung der Szene</div>
+        <br>
+        <div>C / Shift+C = Rotation</div>
+        <div>H / Shift+H = Kamera hoch und runter bewegen</div>
+        <div>E / Shift+E = Kamera-Distanz zum Zentrum</div>
+        <div>V / Shift+V = Öffnungswinkel ändern</div>
+    </div>
 </div>
 </body>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: beige;
+        display: flex;
+        justify-content: center;
+    }
+    #container {
+        display: flex;
+        margin-top: 40px;
+    }
+    #canvas {
+        border-radius: 50px;
+    }
+    #documentation {
+        margin-left: 50px;
+        max-width: 500px;
+        background-color: azure;
+        padding: 20px 50px 40px;
+        border-radius: 50px;
+    }
+</style>
 </html>
