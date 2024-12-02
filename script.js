@@ -144,16 +144,16 @@ const app = (function () {
       switch (c) {
         // WASD: Bewegung der Kamera in der XY-Ebene
         case 'W':
-          camera.eye[1] += deltaTranslate;
+          models.forEach(model => model.translate[1] -= deltaTranslate);
           break;
         case 'S':
-          camera.eye[1] -= deltaTranslate;
+          models.forEach(model => model.translate[1] += deltaTranslate);
           break;
         case 'A':
-          camera.eye[0] -= deltaTranslate;
+          models.forEach(model => model.translate[0] -= deltaTranslate);
           break;
         case 'D':
-          camera.eye[0] += deltaTranslate;
+          models.forEach(model => model.translate[0] += deltaTranslate);
           break;
 
         case 'E': // Kamera-Distanz zum Zentrum
