@@ -81,8 +81,8 @@ const app = (function () {
 
   function initModels() {
     const fs = "fillwireframe";
-    createModel("cube", fs, [1, 0, 0, 1], [-1.2, 0.1, 0.4], [0, 0, 0], [0.8, 0.5, 0.5]);
-    createModel("cube", fs, [0, 1, 0, 1], [0, 0, -0.2], [0, 0, 0], [0.5, 0.35, 0.8]);
+    createModel("cube", fs, [1, 0, 0, 1], [-1.2, 0.1, 0.7], [0, 0, 0], [0.8, 0.5, 0.5]);
+    createModel("cube", fs, [0, 1, 0, 1], [-0.2, 0, -0.2], [0, 0, 0], [0.5, 0.35, 0.8]);
     createModel("cube", fs, [0, 0, 1, 1], [0.5, 0, -1.2], [0, 0, 0], [0.5, 0.8, 0.5]);
     interactiveModel = models[0];
   }
@@ -144,28 +144,22 @@ const app = (function () {
       switch (c) {
         // WASD: Bewegung der Kamera in der XY-Ebene
         case 'W':
-          camera.eye[1] += deltaTranslate; // Kamera nach oben bewegen
+          camera.eye[1] += deltaTranslate;
           break;
         case 'S':
-          camera.eye[1] -= deltaTranslate; // Kamera nach unten bewegen
+          camera.eye[1] -= deltaTranslate;
           break;
         case 'A':
-          camera.eye[0] -= deltaTranslate; // Kamera nach links bewegen
+          camera.eye[0] -= deltaTranslate;
           break;
         case 'D':
-          camera.eye[0] += deltaTranslate; // Kamera nach rechts bewegen
+          camera.eye[0] += deltaTranslate;
           break;
 
-        case 'C':
-          camera.zAngle += sign * deltaRotate;
-          break;
-        case 'H':
-          camera.eye[1] += sign * deltaTranslate;
-          break;
-        case 'E':
+        case 'E': // Kamera-Distanz zum Zentrum
           camera.distance += sign * deltaTranslate;
           break;
-        case 'V':
+        case 'V': // Öffnungswinkel
           camera.fovy += sign * 5 * Math.PI / 180;
           break;
       }
